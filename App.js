@@ -14,6 +14,7 @@ import {
   View,
   Text,
   StatusBar,
+  TouchableOpacity,
 } from 'react-native';
 
 import {
@@ -54,20 +55,48 @@ const circleSvgPath = ({ position, canvasSize }): string =>
     currentStep,
     tooltipLabelTextValue,
     tooltipTextValue,
+    labels
   }) => (
-    <View style={styles.tooltipContainer}>
+    <View >
       <View style={styles.tooltipHeader}>
-        <View style={styles.tooltipLabel}>
-          {/* <Text style={styles.tooltipLabelText}>{tooltipLabelTextValue}</Text> */}
-          <Text style={styles.tooltipLabelText}>Create a balanced team</Text>
-        </View>
-        <StepNumberComponent />
+          <Text style={styles.tooltipHeaderText}>Create a balanced team</Text>
+          {/* <Text style={styles.tooltipLabelText}>Create a balanced team</Text> */}
+        {/* <View style={styles.tooltipLabel}>
+          <Text style={styles.tooltipLabelText}>{tooltipLabelTextValue}</Text>
+        </View> */}
       </View>
       <View style={styles.tooltipBody}>
+        <Text style={styles.tooltipSubtitle}>Use your skill to pick players from all roles. Lorem Epsom pick your players and lorem ipsum</Text>
         <View style={styles.tooltipStep}>
-          <Text style={styles.tooltipText}>{tooltipTextValue}</Text>
-          <Text style={styles.tooltipText}>Use your skill to pick players from all roles. Lorem Epsom pick your players and lorem ipsum</Text>
+          {/* <Text style={styles.tooltipText}>{tooltipTextValue}</Text> */}
+          <StepNumberComponent />
         </View>
+      </View>
+
+      <View style={[styles.bottomBar]}>
+        {
+          !isLastStep ?
+            <TouchableOpacity onPress={handleStop}>
+              <Text style={styles.bottomBarText}>{labels.skip || 'Skip'}</Text>
+            </TouchableOpacity>
+            : null
+        }
+        {
+          !isFirstStep ?
+            <TouchableOpacity onPress={handlePrev}>
+              <Text style={styles.bottomBarText}>{labels.previous || 'Previous'}</Text>
+            </TouchableOpacity>
+            : null
+        }
+        {
+          !isLastStep ?
+            <TouchableOpacity onPress={handleNext}>
+              <Text style={styles.bottomBarText}>{labels.next || 'Next'}</Text>
+            </TouchableOpacity> :
+            <TouchableOpacity onPress={handleStop}>
+              <Text style={styles.bottomBarText}>{labels.finish || 'Finish'}</Text>
+            </TouchableOpacity>
+        }
       </View>
     </View>
   );
@@ -136,9 +165,23 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#5E2396',
     borderRadius: 6,
+    paddingTop: 20,
+    paddingHorizontal: 15,
+    paddingBottom: 20,
+    // margin: -16,
   },
   tooltipHeader: {
     flex: 1,
+  },
+  tooltipHeaderText: {
+    fontSize: 16,
+    fontWeight: "500",
+    marginBottom: 15,
+    color: "#fff"
+  },
+  tooltipSubtitle: {
+    color: "#D1D1D1",
+    fontSize: 13
   },
   tooltipLabel: {},
   tooltipLabelText: {},
@@ -188,9 +231,22 @@ export const styles = StyleSheet.create({
     paddingRight: 12,
     textAlign: 'right',
   },
+  bottomBar: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: "space-between",
+    fontSize: 13,
+    color: '#fff'
+  },
+  bottomBarText: {
+    fontSize: 13,
+    fontWeight: '500',
+    color: 'white'
+  }
 });
 
 export default copilot({
+  tooltipStyle: styles.tooltipContainer,
   tooltipComponent: TooltipComponent,
   stepNumberComponent: StepNumberComponent,
   // svgMaskPath: circleSvgPath,
