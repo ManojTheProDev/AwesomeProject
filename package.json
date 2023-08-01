@@ -13,7 +13,7 @@
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-copilot": "^2.4.6",
-    "react-native-svg": "^9.13.3"
+    "react-native-svg": "^13.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
